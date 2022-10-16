@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    triggers {
+           pollSCM ('* * * * *')
+    }
+    stages {
+        stage ('vcs') {
+            steps{
+                   git branch: 'develop' , 
+                       url: 'https://github.com/rohi3369/shopizer.git'
+            }
+        }
+        stage ('Artifactory config') {
+            steps{
+                rtMavenDeployer (
+                    id: 'MAVEN_DEPOLYER',
+                    serverId: 'jfrog_id',
+                    releaseRepo: 'default-libs-release-local',
+                    snapshotRepo: 'default-libs-snapshot-local' 
+                )
+            }
+        }
+        stage ('Exec Maven') {
+            steps {
+                rtMavenRun (
+                    tool: 'maven', // Tool name from Jenkins configuration
+                    pom: 'pom.xml',
+                    goals: 'clean install' ,
+                    deployerId: 'MAVEN_DEPOLYER'
+                )
+            }
+        } 
+        stage ('publish build info'){
+            steps{
+                rtPublishBuildInfo(
+                    serverId: 'jfrog_id'
+                )
+            }
+        } 
+        stage('Archive results') {
+            steps {
+                junit '**/surefire-reports/*.xml'
+            }
+        }
+       
+    }
+}
