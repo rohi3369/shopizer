@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    triggers {
+           pollscm('* * * * *')
+    }
+    stages {
+        stage ('vcs') {
+            steps{
+                   git branch: 'develop' , 
+                       url: 'https://github.com/rohi3369/shopizer.git'
+            }
+        }
+        stage ('build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+    } 
+}   
