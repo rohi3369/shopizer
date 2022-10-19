@@ -10,11 +10,11 @@ pipeline {
             }
         } 
          stage('merge'){
-            sh 'git checkout release'
+            steps{sh 'git checkout release'
             sh 'git merge develop --no-ff'
             sh 'git push origin release'
-
-         }
+            }
+        }
     }  
     
 }
