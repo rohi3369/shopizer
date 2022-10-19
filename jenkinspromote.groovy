@@ -10,8 +10,9 @@ pipeline {
             }
         } 
          stage('merge'){
-            steps{sh 'git checkout release'
-            sh 'git merge develop --no-ff'
+            steps{
+            sh 'git checkout release'
+            sh 'git merge origin/develop --no-ff'
             sh 'git push origin release'
             }
         }
