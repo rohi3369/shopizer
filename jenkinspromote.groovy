@@ -10,10 +10,9 @@ pipeline {
             }
         } 
          stage('merge'){
-            sh 'git pull --all'
-            sh 'git add .'
-            sh  'git commit -m "added jenkins file"'
-            sh  'gi push --all'
+            sh 'git checkout release'
+            sh 'git merge develop --no-ff'
+            sh 'git push origin release'
 
          }
     }  
