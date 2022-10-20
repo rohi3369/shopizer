@@ -6,7 +6,8 @@ pipeline {
     stages {
         stage ('vcs') {
             steps{
-                git url: 'git@github.com:rohi3369/shopizer.git'
+                git url: 'git@github.com:rohi3369/shopizer.git',
+                   branch: 'master'
             }
         } 
          stage('merge'){
