@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    triggers {
+           pollSCM('* * * * *')
+        }
+    stages {
+        stage ('vcs') {
+            steps{
+                git url: 'https://github.com/rohi3369/shopizer.git'
+            }
+        } 
+        stage('build') {
+            steps {
+            sh 'mvn clean install'
+            }
+        }
+    }
+post {
+        always {
+            archiveArtifacts artifacts: '**/*.min.*', onlyIfSuccessful: true
+        }
+    }
+}
