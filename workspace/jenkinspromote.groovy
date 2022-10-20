@@ -1,13 +1,13 @@
 pipeline {
-    agent any
+    agent {label 'merge'}
     triggers {
            cron('* 17 * * *')
     }
     stages {
         stage ('vcs') {
             steps{
-                git url: 'git@github.com:rohi3369/shopizer.git',
-                   branch: 'master'
+                git branch: 'master',
+                url: 'git@github.com:rohi3369/shopizer.git'
             }
         } 
          stage('merge'){
