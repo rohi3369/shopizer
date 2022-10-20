@@ -13,6 +13,7 @@ pipeline {
             steps{
             sh 'git checkout release'
             sh 'git merge origin/develop --no-ff'
+            sh 'git push origin release'                 
             }
         }
     }  
