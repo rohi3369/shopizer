@@ -11,6 +11,7 @@ pipeline {
         } 
          stage('merge'){
             steps{
+            sh 'git checkout develop'      
             sh 'git checkout release'
             sh 'git merge develop --no-ff'
             sh 'git push -u origin release'
