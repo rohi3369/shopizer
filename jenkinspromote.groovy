@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label 'merge'}
     triggers {
            cron('* 17 * * *')
     }
